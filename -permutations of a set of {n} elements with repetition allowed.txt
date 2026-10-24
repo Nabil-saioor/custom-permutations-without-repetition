@@ -1,0 +1,34 @@
+#m-permutations of a set of {n} elements with repetition allowed
+n = int(input("Enter the value of n: "))
+m = int(input("Enter the value of m: "))
+c = []
+for i in range(1, n + 1):
+    s = input(f"Enter characteristic ({i}): ")
+    c.append(s)
+    
+    if i > 1:
+        for j in range(0, i - 1):
+            while c[i-1] == c[j]:
+                print("Error: characteristics must be different.")
+                c.pop()
+                s = input(f"Enter characteristic ({i}): ")
+                c.append(s)
+    
+print("\nYour sequence is: ",*c, sep="")
+k = 0
+def generate(sequence, used):
+    global k
+    if len(sequence) == m:
+        print(*sequence, sep = "")
+        k +=1
+        return
+        
+    for i in range(0, n ):
+        if not used[i]:
+            used[i] = True
+            generate(sequence + [c[i]], used)
+            used[i] = False
+        
+used = [False]* n   
+generate( [], used )
+print(f"\nThe number of {m}-permutations of a set of {n} elements without repetition allowed is ",k)
